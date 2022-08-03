@@ -55,7 +55,7 @@ public class XssHttpServletRequestWrapper extends HttpServletRequestWrapper {
 		Map<String, Object> map = objectMapper.readValue(json, Map.class);
 		map.forEach((k, v) -> {
 			if (v instanceof String) {
-				v = cleanXSS((String) v);
+				v = resolveXSS((String) v);
 				map.put(k, v);
 			}
 		});
@@ -106,7 +106,7 @@ public class XssHttpServletRequestWrapper extends HttpServletRequestWrapper {
 		if (values != null && values.length > 0) {
 			String[] safeValues = new String[values.length];
 			for (int i = 0; i < values.length; i++) {
-				safeValues[i] = cleanXSS(values[i]);
+				safeValues[i] = resolveXSS(values[i]);
 			}
 			return safeValues;
 		}
@@ -125,7 +125,7 @@ public class XssHttpServletRequestWrapper extends HttpServletRequestWrapper {
 		if (name.equalsIgnoreCase(HandlerMapping.URI_TEMPLATE_VARIABLES_ATTRIBUTE) && value != null && value instanceof Map) {
 			((Map) value).forEach((k, v) -> {
 				if (v instanceof String) {
-					v = cleanXSS((String) v);
+					v = resolveXSS((String) v);
 					((Map) value).put(k, v);
 				}
 			});
@@ -137,7 +137,7 @@ public class XssHttpServletRequestWrapper extends HttpServletRequestWrapper {
 	public String getParameter(String name) {
 		String value = super.getParameter(name);
 		if (value != null) {
-			value = cleanXSS(value);
+			value = resolveXSS(value);
 		}
 		return value;
 	}
@@ -152,7 +152,7 @@ public class XssHttpServletRequestWrapper extends HttpServletRequestWrapper {
 	 *
 	 * @param value string request content
 	 */
-	private String cleanXSS(String value) {
+	private String resolveXSS(String value) {
 		value = ESAPI.encoder().encodeForHTML(value);
 		value = ESAPI.encoder().encodeForJavaScript(value);
 		value = ESAPI.encoder().encodeForXML(value);
