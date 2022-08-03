@@ -23,6 +23,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.apache.commons.lang.StringEscapeUtils;
+import org.owasp.esapi.ESAPI;
 
 import org.springframework.core.MethodParameter;
 import org.springframework.http.MediaType;
@@ -49,7 +50,9 @@ public class XssResponseBodyAdvice implements ResponseBodyAdvice {
 	@Override
 	public Object beforeBodyWrite(Object body, MethodParameter methodParameter, MediaType mediaType, Class aClass, ServerHttpRequest serverHttpRequest, ServerHttpResponse serverHttpResponse) {
 		if (body instanceof String) {
-			body = StringEscapeUtils.escapeHtml((String) body);
+			body = ESAPI.encoder().encodeForHTML((String) body);
+			body = ESAPI.encoder().encodeForJavaScript((String) body);
+			body = ESAPI.encoder().encodeForXML((String) body);
 			return body;
 		}
 		try {

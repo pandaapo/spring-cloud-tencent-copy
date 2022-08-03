@@ -30,7 +30,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletRequestWrapper;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.apache.commons.lang.StringEscapeUtils;
+import org.owasp.esapi.ESAPI;
 
 import org.springframework.web.servlet.HandlerMapping;
 
@@ -153,7 +153,9 @@ public class XssHttpServletRequestWrapper extends HttpServletRequestWrapper {
 	 * @param value string request body
 	 */
 	private String cleanXSS(String value) {
-		value = StringEscapeUtils.escapeHtml(value);
+		value = ESAPI.encoder().encodeForHTML(value);
+		value = ESAPI.encoder().encodeForJavaScript(value);
+		value = ESAPI.encoder().encodeForXML(value);
 		return value;
 	}
 }
