@@ -53,11 +53,11 @@ public class RouterCalleeController {
 	}
 
 	private User cleanXSS(User user) {
+		User u = new User();
 		String name = ESAPI.encoder().encodeForHTML(user.getName());
-		name = ESAPI.encoder().encodeForJavaScript(name);
-		name = ESAPI.encoder().encodeForXML(name);
-		user.setName(name);
-		return user;
+		u.setName(name);
+		u.setAge(user.getAge());
+		return u;
 	}
 
 }
