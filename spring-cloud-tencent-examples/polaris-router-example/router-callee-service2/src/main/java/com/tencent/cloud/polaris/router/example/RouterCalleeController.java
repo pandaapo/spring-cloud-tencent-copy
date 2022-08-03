@@ -54,9 +54,10 @@ public class RouterCalleeController {
 	}
 
 	private User cleanXSS(User user) {
-		String name = user.getName();
-		user.setName(StringEscapeUtils.escapeHtml(name));
-		return user;
+		User u = new User();
+		u.setName(StringEscapeUtils.escapeHtml(user.getName()));
+		u.setAge(user.getAge());
+		return u;
 	}
 
 }
