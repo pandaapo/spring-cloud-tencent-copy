@@ -53,8 +53,7 @@ public class RouterCalleeController {
 	}
 
 	private User cleanXSS(User user) {
-		String name = user.getName();
-		name = ESAPI.encoder().encodeForHTML(name);
+		String name = ESAPI.encoder().encodeForHTML(user.getName());
 		name = ESAPI.encoder().encodeForJavaScript(name);
 		name = ESAPI.encoder().encodeForXML(name);
 		user.setName(name);
