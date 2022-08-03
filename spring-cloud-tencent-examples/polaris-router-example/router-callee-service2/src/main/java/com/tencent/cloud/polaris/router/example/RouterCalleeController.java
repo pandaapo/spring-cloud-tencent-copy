@@ -18,7 +18,7 @@
 
 package com.tencent.cloud.polaris.router.example;
 
-import org.apache.commons.lang.StringEscapeUtils;
+import org.owasp.esapi.ESAPI;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -55,7 +55,8 @@ public class RouterCalleeController {
 
 	private User cleanXSS(User user) {
 		User u = new User();
-		u.setName(StringEscapeUtils.escapeHtml(user.getName()));
+		String name = ESAPI.encoder().encodeForHTML(user.getName());
+		u.setName(name);
 		u.setAge(user.getAge());
 		return u;
 	}

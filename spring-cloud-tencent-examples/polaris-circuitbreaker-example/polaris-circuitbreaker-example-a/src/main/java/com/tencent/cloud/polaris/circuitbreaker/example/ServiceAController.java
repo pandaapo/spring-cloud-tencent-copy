@@ -70,8 +70,6 @@ public class ServiceAController {
 
 	private String cleanXSS(String str) {
 		str = ESAPI.encoder().encodeForHTML(str);
-		str = ESAPI.encoder().encodeForJavaScript(str);
-		str = ESAPI.encoder().encodeForXML(str);
 		return str;
 	}
 }
