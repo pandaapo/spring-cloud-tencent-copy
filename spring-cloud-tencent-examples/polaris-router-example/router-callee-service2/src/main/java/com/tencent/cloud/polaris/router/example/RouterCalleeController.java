@@ -19,7 +19,6 @@
 package com.tencent.cloud.polaris.router.example;
 
 import org.apache.commons.lang.StringEscapeUtils;
-import org.owasp.esapi.ESAPI;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
